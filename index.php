@@ -24,28 +24,28 @@
             <div class="row">
                 <div class="col">
                     <div class="jumbotron py-1 border">
-                        <h1 class="display-4">Agenda Pessoal</h1>
+                        <h1 class="display-4"><i class="fas fa-book mr-3 text-success"></i>Agenda Pessoal</h1>
                         <p class="lead">Visualize os seus contatos abaixo e também adicione novos através do botão na tela.</p>
+                        <p><em><i class="fas fa-exclamation text-danger mr-3"></i>Em breve serão adicionadas opções de upload e pesquisa aprimoradas.</em></p>
                         <div class="text-right">
                         <button class="btn btn-primary btn-lg rounded border-secondary mx-2 px-3 bg-secondary mb-3" href="#" role="button" onclick="#"><i class="fas fa-search fa-lg"></i></button>
                         <button class="btn btn-primary btn-lg rounded border-success mx-2 px-3 bg-success mb-3" href="#" role="button" onclick="modalAdd()"><i class="fas fa-user-plus fa-lg"></i></button>
                     </div>
-                        
-                    </div>
-                    <div class="rounded-lg d-flex justify-content-center">
-                        <? if (isset($_GET['code']) && $_GET['code'] == 'insert') {?>
-                            <div class="alert h2 bg-success text-white text-center">Registro adicionado!</div>
-                            <div><i class="far fa-times-circle ml-1 bg-success px-1 py-1 text-white rounded" onclick="removerAlerta()"></i></div>
+                </div>
+
+                    <div>
+                        <div class="rounded-lg d-flex justify-content-center">
+                            <? if (isset($_GET['code']) && $_GET['code'] == 'insert') {?>
+                            <div class="alert h5 bg-success text-white text-center mb-0" style="padding: 8px 10px; border-width: 0; cursor: pointer;" onclick="removerAlerta()">Adicionado!</div>
                         <? } ?>
-                        <? if (isset($_GET['code']) && $_GET['code'] == 'update') {?>
-                            <div class="alert h2 bg-info text-white text-center">Registro atualizado!</div>
-                            <div><i class="far fa-times-circle ml-1 bg-info px-1 py-1 text-white rounded" onclick="removerAlerta()"></i></div>
+                            <? if (isset($_GET['code']) && $_GET['code'] == 'update') {?>
+                            <div class="alert h5 bg-info text-white text-center mb-0" style="padding: 8px 10px; border-width: 0; cursor: pointer;" onclick="removerAlerta()">Atualizado!</div>
                         <? } ?>
-                        <? if (isset($_GET['code']) && $_GET['code'] == 'remove') {?>
-                            <div class="alert h2 rounded bg-danger text-white text-center">Registro removido!</div>
-                            <div><i class="far fa-times-circle ml-1 bg-danger px-1 py-1 text-white rounded" onclick="removerAlerta()"></i></div>
+                            <? if (isset($_GET['code']) && $_GET['code'] == 'remove') {?>
+                            <div class="alert h5 rounded bg-danger text-white text-center mb-0" style="padding: 8px 10px; border-width: 0; cursor: pointer;" onclick="removerAlerta()">Removido!</div>
                         <? } ?>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
         </div>
     </section>
 
-    <!-- Modal -->
+    <!-- Modal insert -->
     <div class="modal fade" id="modalInsert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -130,7 +130,7 @@
       </div>
     </div>
 
-    <!-- Modal update-->
+    <!-- Modal update -->
     <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -172,7 +172,25 @@
         </div>
     </div>
 
-
+    <!-- Modal warning -->
+    <div class="modal fade" id="modalAviso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                As funcionalidades de pesquisa individual e upload de fotos serão adicionadas em breve!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
