@@ -1,6 +1,11 @@
 <?php
-    $acao = 'select';
+    
+    if(!isset($_GET['acao'])) {
+        $acao = 'select';
+    }
+
     require 'controller.php';
+
 ?>
 
 <!doctype html>
@@ -19,179 +24,77 @@
   </head>
   <body>
 
-    <header>
-        <div class="cheader container mt-2 mb-5">
+  <header>
+        <div class="container mt-2 mb-5 py-0">
             <div class="row">
                 <div class="col">
                     <div class="jumbotron py-1 border">
                         <h1 class="display-4"><i class="fas fa-book mr-3 text-success"></i>Agenda Pessoal</h1>
                         <p class="lead">Visualize os seus contatos abaixo e também adicione novos através do botão na tela.</p>
-                        <p><em><i class="fas fa-exclamation text-danger mr-3"></i>Em breve serão adicionadas opções de upload e pesquisa aprimoradas.</em></p>
-                        <div class="text-right">
-                        <button class="btn btn-primary btn-lg rounded border-secondary mx-2 px-3 bg-secondary mb-3" href="#" role="button" onclick="#"><i class="fas fa-search fa-lg"></i></button>
-                        <button class="btn btn-primary btn-lg rounded border-success mx-2 px-3 bg-success mb-3" href="#" role="button" onclick="modalAdd()"><i class="fas fa-user-plus fa-lg"></i></button>
-                    </div>
-                </div>
-
-                    <div>
-                        <div class="rounded-lg d-flex justify-content-center">
-                            <? if (isset($_GET['code']) && $_GET['code'] == 'insert') {?>
-                            <div class="alert h5 bg-success text-white text-center mb-0" style="padding: 8px 10px; border-width: 0; cursor: pointer;" onclick="removerAlerta()">Adicionado!</div>
-                        <? } ?>
-                            <? if (isset($_GET['code']) && $_GET['code'] == 'update') {?>
-                            <div class="alert h5 bg-info text-white text-center mb-0" style="padding: 8px 10px; border-width: 0; cursor: pointer;" onclick="removerAlerta()">Atualizado!</div>
-                        <? } ?>
-                            <? if (isset($_GET['code']) && $_GET['code'] == 'remove') {?>
-                            <div class="alert h5 rounded bg-danger text-white text-center mb-0" style="padding: 8px 10px; border-width: 0; cursor: pointer;" onclick="removerAlerta()">Removido!</div>
-                        <? } ?>
-                    </div>
-
+                        <div class="d-flex">
+                            <div class="mr-auto">
+                                <button class="btn btn-primary btn-lg rounded border-secondary mx-2 px-3 bg-secondary mb-3" href="#" role="button" onclick="mainPage()"><i class="fas fa-home fa-lg"></i></button>
+                            </div>
+                            <div class="ml-auto">
+                                <button class="btn btn-primary btn-lg rounded border-secondary mx-2 px-3 bg-secondary mb-3" href="#" role="button" onclick="search()"><i class="fas fa-search fa-lg"></i></button>
+                                <button class="btn btn-primary btn-lg rounded border-success mx-2 px-3 bg-success mb-3" href="#" role="button" onclick="modalAdd()"><i class="fas fa-user-plus fa-lg"></i></button>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
     </header>
 
-    
-
     <section>
         <div class="container">
             <div class="row">
-                <? foreach ($lista as $key => $value) { ?>
-                    <div class="col-md-4 d-flex justify-content-center mb-5">
-                        <div class="card-box card bg-light mb-3" style="width: 20rem;">
-                            <div class="card-header">
-                                <img src="https://via.placeholder.com/125C/" class="img-thumbnail"></img>
-                                <div class="text-right mt-2">
-                                    <button class="btn btn-info" onclick="modalUpdate(<?= $value->id ?>, '<?= $value->nome ?>', '<?= $value->telefone ?>', '<?= $value->email ?>')"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-danger" onclick="remover(<?= $value->id ?>)"><i class="fas fa-user-minus"></i></button>
+
+            <? if($acao == 'select') { ?>
+                <? foreach ($listagem as $key => $value) { ?>
+                    <div class="col-md-4 d-flex mb-5">
+                        <div class="card-header shadow" style="width: auto; padding: 0;">
+                            <img class="card-img-top p-0" src="./upload/<?= $value->foto ?>" alt="Card image cap">
+                                <div class="text-right mt-2 mr-3">
+                                    <button class="btn btn-info py-1" onclick="modalUpdate(<?= $value->id ?>, '<?= $value->nome ?>', '<?= $value->telefone ?>', '<?= $value->email ?>')"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger py-1" onclick="remover(<?= $value->id ?>)"><i class="fas fa-user-minus"></i></button>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                            <h5 class="card-title"><?= $value->nome ?></h5>
-                            <p class="card-text mb-2"><?= $value->telefone ?></p>
-                            <p class="card-text mb-2"><?= $value->email ?></p>
-                            </div>
+                                <div class="card-body align-content-end">
+                                    <h5 class="card-title"><?= $value->nome ?></h5>
+                                    <p class="card-text mb-2"><?= $value->telefone ?></p>
+                                    <p class="card-text mb-2"><?= $value->email ?></p>
+                                </div>
                         </div>
                     </div>
-                <? } ?>
+                <?}?>
+            <?}?>
+            
+            <? if($acao == 'search') { ?>
+                <? foreach ($pesquisa as $key => $value) { ?>
+                    <div class="col-md-6 d-flex mb-5 m-auto">
+                        <div class="card-header shadow" style="width: auto; padding: 0;">
+                            <img class="card-img-top p-0" src="./upload/<?= $value->foto ?>" alt="Card image cap">
+                                <div class="text-right mt-2 mr-3">
+                                    <button class="btn btn-info py-1" onclick="modalUpdate(<?= $value->id ?>, '<?= $value->nome ?>', '<?= $value->telefone ?>', '<?= $value->email ?>')"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger py-1" onclick="remover(<?= $value->id ?>)"><i class="fas fa-user-minus"></i></button>
+                                </div>
+                                <div class="card-body align-content-end">
+                                    <h5 class="card-title"><?= $value->nome ?></h5>
+                                    <p class="card-text mb-2"><?= $value->telefone ?></p>
+                                    <p class="card-text mb-2"><?= $value->email ?></p>
+                                </div>
+                        </div>
+                    </div>
+                <?}?>
+            <?}?>
+
+
+
             </div>
         </div>
     </section>
 
-    <!-- Modal insert -->
-    <div class="modal fade" id="modalInsert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicionar contato</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                  <form action="controller.php?acao=insert" method="post">
-                      <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text" >Nome:</span>
-                          </div>
-                          <input name ="nome" id="nomeContato" type="text" class="form-control" placeholder="Ex: Karl Marx">
-                      </div>
-                      <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text" >Telefone:</span>
-                          </div>
-                          <input name="telefone" id="telContato" type="text" class="form-control" placeholder="Ex: (11)99999-9999">
-                      </div>
-                      <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text">E-mail:</span>
-                          </div>
-                          <input name="email" id="emailContato" type="email" class="form-control" placeholder="Ex: karlmarx@gmail.com">
-                      </div>
-                        <div class="input-group mb-3">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" >
-                                <label name="foto" id="fotoContato" class="custom-file-label" for="fotoContato">Adicionar imagem de perfil</label>
-                            </div>
-                          <!-- <div class="input-group-append">
-                            <span class="input-group-text" id="">Upload</span>
-                          </div> -->
-                        </div>
-                      </div>
-                      <div class="modal-footer d-flex">                    
-                          <div class="mr-auto"><button type="button" class="btn btn-info" onclick="limparModal()">Limpar campos</button></div>
-                          <div><button type="button" class="btn btn-secondary mr-1" data-dismiss="modal" onclick="limparModal()">Fechar</button></div>
-                          <div><button type="submit" class="btn btn-success">Salvar</button></div>
-                      </div>               
-                  </form>
-                </div>
-            </div>
-          </div>
-      </div>
-    </div>
+    <? require 'modal.php'; ?>
 
-    <!-- Modal update -->
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar contato</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="controller.php?acao=update" method="post">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Nome:</span>
-                        </div>
-                        <input name ="nome" id="updateNome" type="text" class="form-control">
-                        <input type="hidden" id="id" name="idContato">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Telefone:</span>
-                        </div>
-                        <input name="telefone" id="updateTel" type="text" class="form-control">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">E-mail:</span>
-                        </div>
-                        <input name="email" id="updateEmail" type="email" class="form-control">
-                    </div>
-                    
-                    </div>
-                    <div class="modal-footer d-flex">                    
-                        <div><button type="button" class="btn btn-secondary mr-1" data-dismiss="modal" onclick="limparModal()">Fechar</button></div>
-                        <div><button type="submit" class="btn btn-success">Atualizar</button></div>
-                    </div>               
-                </form>            
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal warning -->
-    <div class="modal fade" id="modalAviso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header bg-warning text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                As funcionalidades de pesquisa individual e upload de fotos serão adicionadas em breve!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            </div>
-        </div>
-    </div>
-      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
