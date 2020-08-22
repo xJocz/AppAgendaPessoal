@@ -1,5 +1,5 @@
 # AppAgendaPessoal
-#http://jczapp.epizy.com/
+http://jczapp.epizy.com/
 
 - Para rodar a aplicação, torna-se necessário ter o xampp instalado e com os serviços do Apache e MySql iniciados.
 - Os arquivos precisam estar dentro da pasta "C:\xampp\htdocs\AppAgendaPessoal".
